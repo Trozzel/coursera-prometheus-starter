@@ -24,6 +24,11 @@ struct HealthStatus {
 
 // Health endpoint handler
 async fn health() -> impl Responder {
+    // If file, error.txt exists, return a 500 error
+    if std::path::Path::new("error.txt").exists() {
+        return HttpResponse::InternalServerError().finish();
+    }
+
     let mut checks = vec![];
 
     // Check container uptime
@@ -102,9 +107,6 @@ async fn redact(input_text: web::Json<String>) -> impl Responder {
     // Return the redacted text
     HttpResponse::Ok().body(redacted_text)
 }
-
-// actix Endpoint that returns HTML of a bootstrap navbar
-//async fn navbar()
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
