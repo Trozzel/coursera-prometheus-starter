@@ -115,6 +115,8 @@ async fn main() -> std::io::Result<()> {
         .build()
         .unwrap();
 
+    println!("Starting server on http://127.0.0.1:8080...");
+
     HttpServer::new(move || {
         App::new()
             .wrap(prometheus.clone())
