@@ -20,6 +20,7 @@ pub struct Rule {
     pub comment: String,
 }
 
+// Implement the Rule struct
 impl Rule {
     fn new(pattern: String, placeholder: String, comment: String) -> Self {
         Rule {

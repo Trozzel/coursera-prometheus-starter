@@ -13,6 +13,7 @@ struct HealthCheck {
     status: String,
 }
 
+// Health endpoint JSON
 #[derive(Serialize)]
 struct HealthStatus {
     uptime: u64,
@@ -21,6 +22,7 @@ struct HealthStatus {
     checks: Vec<HealthCheck>,
 }
 
+// Health endpoint handler
 async fn health() -> impl Responder {
     let mut checks = vec![];
 
@@ -59,6 +61,7 @@ async fn health() -> impl Responder {
     HttpResponse::Ok().json(health_status)
 }
 
+// Redact endpoint handler
 async fn index() -> impl Responder {
     let html = r#"<!DOCTYPE html>
 <html lang="en">
@@ -81,6 +84,7 @@ async fn index() -> impl Responder {
     HttpResponse::Ok().body(html)
 }
 
+// Redact endpoint handler
 async fn redact(input_text: web::Json<String>) -> impl Responder {
     let mut rules = load_rule_configs();
 
@@ -98,6 +102,9 @@ async fn redact(input_text: web::Json<String>) -> impl Responder {
     // Return the redacted text
     HttpResponse::Ok().body(redacted_text)
 }
+
+// actix Endpoint that returns HTML of a bootstrap navbar
+//async fn navbar()
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
